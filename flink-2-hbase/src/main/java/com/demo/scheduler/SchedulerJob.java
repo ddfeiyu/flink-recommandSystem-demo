@@ -7,8 +7,15 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
 /**
- * FIXME :离线引擎
+ * FIXME :离线引擎 每12小时定时调度一次 基于两个推荐策略的 产品评分计算
+ * FIXME :策略1 ：协同过滤
+ *        数据写入Hbase表  px
+ *
+ * FIXME :策略2 ： 基于产品标签 计算产品的余弦相似度
+ *        数据写入Hbase表 ps
+ *
  */
 public class SchedulerJob {
 
@@ -81,11 +88,13 @@ public class SchedulerJob {
 		public void run() {
 			try {
 				/**
-				 * FIXME  基于协同过滤的产品相关度计算
+				 * FIXME  基于协同过滤的产品相关度计算 , 存入 Hbase表 px
+				 *  根据p_history（产品-用户关联表），计算两个产品之间的评分
 				 */
 				item.getSingelItemCfCoeff(id, others);
 				/**
 				 * FIXME  基于产品标签的产品相关度计算
+				 *  根据标签计算两个产品之间的相关度, 计算一个产品和其他相关产品的评分,并将计算结果放入Hbase , 存入 Hbase表 ps
 				 */
 				prod.getSingelProductCoeff(id, others);
 			} catch (Exception e) {

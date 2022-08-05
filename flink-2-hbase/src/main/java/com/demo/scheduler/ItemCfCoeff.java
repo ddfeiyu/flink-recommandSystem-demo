@@ -27,6 +27,7 @@ public class ItemCfCoeff {
 
         for (String other : others) {
         	if(id.equals(other)) continue;
+        	// 计算两个产品之间的评分
             Double score = twoItemCfCoeff(id, other);
             HbaseClient.putData("px",id, "p",other,score.toString());
         }
@@ -46,6 +47,15 @@ public class ItemCfCoeff {
         int n = p1.size();
         int m = p2.size();
         int sum = 0;
+        /**
+         * FIXME  基于协同过滤的产品相关度计算
+         * * 策略1 ：协同过滤
+         *      *           abs( i ∩ j)
+         *      *      w = ——————————————
+         *      *           sqrt(i || j)
+         * @author XINZE
+         */
+        // 求平方根
         Double total = Math.sqrt(n * m);
         for (Map.Entry entry : p1) {
             String key = (String) entry.getKey();

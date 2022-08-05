@@ -34,8 +34,13 @@ public class RecommandController {
                                     Model model) throws IOException {
 
         // 拿到不同推荐方案的结果
+        // 1.热度榜数据
         List<ProductDto> hotList = recommandService.recommandByHotList();
+
+        // 2.协同过滤推荐结果
         List<ProductDto> itemCfCoeffList = recommandService.recomandByItemCfCoeff();
+
+        // 3.产品画像推荐结果
         List<ProductDto> productCoeffList = recommandService.recomandByProductCoeff();
 
         // 将结果返回给前端

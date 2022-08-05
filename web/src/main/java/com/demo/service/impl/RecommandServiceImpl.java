@@ -87,15 +87,33 @@ public class RecommandServiceImpl implements RecommandService {
 		return fillProductDto(topList, contactEntities, productEntities, topSize);
 	}
 
+	/**
+	 * 协同过滤推荐结果
+	 * @return
+	 * @throws IOException
+	 */
 	@Override
 	public List<ProductDto> recomandByItemCfCoeff() throws IOException {
+		// redis中的实时商品热度排行榜
 		List<String> topList = getDefaultTop();
+
+		// 查询中对应的hbase推荐表数据添加加结果集
 		List<String> px = addRecommandProduct(topList, "px");
+
+		// 删除list中重复元素
 		px = removeDuplicateWithOrder(px);
-		// 拿到产品详情表
+
+		// 拿到产品详情表 :  select * from contact WHERE id ( ??? )
+		// `id`   `pic_url`    `item_name`    `sub_name`    `mart_price`    `brand_name
+		// INSERT INTO `contact` VALUES (3, 'http://img01.02d.com/Public/Upload/image/20190713/5d29b8512a04f.jpg', 'BarieCat“柚屿”系列', '舒适的非离子材质融合充满复古韵味的混血花纹；虚化的深色边缘与瞳孔的轮廓完美融合；搭配低明度高显色的基色将酷感混血进行到底。', 134.00, 'Bariecat');
 		List<ContactEntity> contactEntities = contactService.selectByIds(px);
-		// 拿到产品基本信息表
+
+		// 拿到产品基本信息表 :  select * from product    WHERE product_id IN ( ??? )
+		//`product_id`  `product_name`   `color`  `diameter`   `style`  `material`   `country`
+		// INSERT INTO `product` VALUES (3, 'zPiqz', 'black', '14', '3', '1', 'china');
 		List<ProductEntity> productEntities = productService.selectByIds(px);
+
+		//
 		return transferToDto(px, contactEntities, productEntities);
 	}
 
@@ -162,9 +180,9 @@ public class RecommandServiceImpl implements RecommandService {
 
 	/**
 	 * 将
-	 * @param list
-	 * @param contactEntities
-	 * @param productEntities
+	 * @param list  查询中对应的hbase推荐表数据添加加结果集
+	 * @param contactEntities  拿到产品详情表
+	 * @param productEntities  拿到产品基本信息表
 	 * @return
 	 */
 	private List<ProductDto> transferToDto(List<String> list, List<ContactEntity> contactEntities,
