@@ -15,6 +15,13 @@ public class LogMapFunction implements MapFunction<String, LogEntity> {
         System.out.println(s);
         LogEntity log = LogToEntity.getLog(s);
         if (null != log){
+
+            /**
+             *   * @param tablename 表名   : con
+             *      * @param rowkey 行号   : userId_productId_time
+             *      * @param famliyname 列族名 : log
+             *      * @param column 列名    : user_id, product_id ,time,action
+             */
             String rowKey = log.getUserId() + "_" + log.getProductId()+ "_"+ log.getTime();
             HbaseClient.putData("con",rowKey,"log","userid",String.valueOf(log.getUserId()));
             HbaseClient.putData("con",rowKey,"log","productid",String.valueOf(log.getProductId()));

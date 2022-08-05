@@ -7,6 +7,9 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * FIXME :离线引擎
+ */
 public class SchedulerJob {
 
 	static ExecutorService executorService = Executors.newFixedThreadPool(10);
@@ -77,7 +80,13 @@ public class SchedulerJob {
 		@Override
 		public void run() {
 			try {
+				/**
+				 * FIXME  基于协同过滤的产品相关度计算
+				 */
 				item.getSingelItemCfCoeff(id, others);
+				/**
+				 * FIXME  基于产品标签的产品相关度计算
+				 */
 				prod.getSingelProductCoeff(id, others);
 			} catch (Exception e) {
 				e.printStackTrace();

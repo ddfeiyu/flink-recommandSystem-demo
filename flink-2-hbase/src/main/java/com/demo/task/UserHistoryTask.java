@@ -9,6 +9,12 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 import java.util.Properties;
 
+/**
+ * FIXME :协同过滤任务
+ * FIXME: 记录用户-产品关联性 =======> 数据存储在 Hbase 表 p_history
+ * FIXME: 记录产品-用户关联性 =======> 数据存储在 Hbase 表 u_history
+ *
+ */
 public class UserHistoryTask {
 
     public static void main(String[] args) throws Exception {

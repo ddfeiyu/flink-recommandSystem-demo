@@ -11,7 +11,9 @@ import java.util.Properties;
 
 /**
  * 产品画像 -> Hbase
- *
+ *  * FIXME  : 画像任务 ====> 产品画像记录 -> 实现基于标签的推荐逻辑
+ *  * FIXME :  数据存储在Hbase产品画像表  ====> prod表
+ *  *
  * @author XINZE
  */
 public class ProductProtaritTask {
