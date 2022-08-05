@@ -5,6 +5,9 @@ import org.apache.flink.streaming.connectors.redis.common.mapper.RedisCommand;
 import org.apache.flink.streaming.connectors.redis.common.mapper.RedisCommandDescription;
 import org.apache.flink.streaming.connectors.redis.common.mapper.RedisMapper;
 
+/**
+ * 存储topN数据到redis
+ */
 public class TopNRedisSink implements RedisMapper<TopProductEntity> {
 
 

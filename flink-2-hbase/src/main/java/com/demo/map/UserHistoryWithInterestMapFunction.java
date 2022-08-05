@@ -67,6 +67,7 @@ public class UserHistoryWithInterestMapFunction extends RichMapFunction<LogEntit
         saveToHBase(logEntity, times);
 
         // 如果用户的操作为3(购物),则清除这个key的state
+        //  *  FIXME  : 通过Flink的 ValueState 实现,如果用户的操作Action=3(收藏),则清除这个产品的state, 如果超过100s没有出现Action=3的事件,也会清除这个state
         if (actionThisTime.getType().equals("3")){
             state.clear();
         }

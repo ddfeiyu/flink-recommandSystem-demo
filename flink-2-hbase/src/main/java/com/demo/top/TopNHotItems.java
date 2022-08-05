@@ -12,6 +12,26 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ *  FIXME : 求点击量前3名的商品
+ * ProcessFunction是Flink提供的一个low-level API，用于实现更高级的功能。
+ *
+ * 它主要提供了 定时器timer的功能（支持 EventTime 或 ProcessingTime）。
+ *
+ * 本案例中我们将利用timer来判断何时收齐了某个window下所有商品的点击量数据。
+ *
+ * 由于Watermark的进度是全局的，
+ *
+ * 在processElement方法中，每当收到一条数据ItemViewCount，
+ * 我们就注册一个windowEnd+1的定时器（Flink框架会自动忽略同一时间的重复注册）。
+ *
+ *
+ * windowEnd+1的定时器被触发时，意味着收到了windowEnd+1的Watermark，即收齐了该windowEnd下的所有商品窗口统计值。
+ *
+ * 我们在onTimer()中处理将收集的所有商品及点击量进行排序，选出TopN，并将排名信息格式化成字符串后进行输出。
+ *
+ * FIXME ：KeyedProcessFunction<K, I, O> ，其中 输入是 TopProductEntity即每个窗口的点击量的数据流，输出是 List<String>
+ */
 public class TopNHotItems extends KeyedProcessFunction<Tuple, TopProductEntity, List<String>>  {
 
     private final int topSize;
@@ -32,6 +52,15 @@ public class TopNHotItems extends KeyedProcessFunction<Tuple, TopProductEntity, 
         itemState = getRuntimeContext().getListState(itemsStateDesc);
     }
 
+    /**
+     * * 在processElement方法中，每当收到一条数据ItemViewCount，
+     *  * 我们就注册一个windowEnd+1的定时器（Flink框架会自动忽略同一时间的重复注册）。
+     *    * windowEnd+1的定时器被触发时，意味着收到了windowEnd+1的Watermark，即收齐了该windowEnd下的所有商品窗口统计值。
+     * @param topProductEntity
+     * @param context
+     * @param collector
+     * @throws Exception
+     */
     @Override
     public void processElement(TopProductEntity topProductEntity, Context context, Collector<List<String>> collector) throws Exception {
         itemState.add(topProductEntity);
@@ -40,6 +69,13 @@ public class TopNHotItems extends KeyedProcessFunction<Tuple, TopProductEntity, 
     }
 
 
+    /**
+     * 在onTimer()中处理将收集的所有商品及点击量进行排序，选出TopN，并将排名信息格式化成字符串后进行输出。
+     * @param timestamp
+     * @param ctx
+     * @param out
+     * @throws Exception
+     */
     @Override
     public void onTimer(long timestamp, OnTimerContext ctx, Collector<List<String>> out) throws Exception {
         List<TopProductEntity> allItems = new ArrayList<>();
