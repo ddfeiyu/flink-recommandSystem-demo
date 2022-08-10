@@ -91,13 +91,13 @@ public class ProductCoeff {
 		 * FIXME 余弦相似度计算公式： [余弦相似度计算公式](https://www.cnblogs.com/qdhxhz/p/9484274.html)
 		 *      *           E( x * y)
 		 *      *      w = ——————————————
-		 *      *           sqrt(x || y)
+		 *      *           totalSqrt(x || y)
 		 */
-		double sqrt = Math.sqrt(product.getTotal() + otherProduct.getTotal());
-		if (sqrt == 0) {
+		double totalSqrt = Math.sqrt(product.getTotal() + otherProduct.getTotal());
+		if (totalSqrt == 0) {
 			return 0.0;
 		}
-		int total = product.getMan() * otherProduct.getMan()
+		int subItem = product.getMan() * otherProduct.getMan()
 				+ product.getWoman() * otherProduct.getWoman()
 				+ product.getAge_10() * otherProduct.getAge_10()
 				+ product.getAge_20() * otherProduct.getAge_20()
@@ -105,7 +105,8 @@ public class ProductCoeff {
 				+ product.getAge_40() * otherProduct.getAge_40()
 				+ product.getAge_50() * otherProduct.getAge_50()
 				+ product.getAge_60() * otherProduct.getAge_60();
-		return Math.sqrt(total) / sqrt;
+		double subItemSqrt = Math.sqrt(subItem);
+		return subItemSqrt / totalSqrt;
 	}
 
 	public static void main(String[] args) throws IOException {
