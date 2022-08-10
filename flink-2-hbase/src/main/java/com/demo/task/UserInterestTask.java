@@ -29,7 +29,8 @@ public class UserInterestTask {
 
         Properties properties = Property.getKafkaProperties("interest");
         DataStreamSource<String> dataStream = env.addSource(new FlinkKafkaConsumer<String>("con", new SimpleStringSchema(), properties));
-        dataStream.map(new GetLogFunction()) // new GetLogFunction(): 将kafka 的数据 转为 LogEntity类
+        dataStream
+                .map(new GetLogFunction()) // new GetLogFunction(): 将kafka 的数据 转为 LogEntity类
                 .keyBy("userId")  // 对userId进行分组
                 /**
                  * FIXME : new UserHistoryWithInterestMapFunction()

@@ -80,8 +80,14 @@ public class ProductPortraitEntity {
 
     public int getTotal(){
         int ret = 0;
-        ret += (man*man) + (woman*woman) + (age_10*age_10) + (age_20*age_20) + (age_30*age_30) + (age_40*age_40) +
-                (age_50*age_50) + (age_60*age_60);
+        ret += (man*man)
+                + (woman*woman)
+                + (age_10*age_10)
+                + (age_20*age_20)
+                + (age_30*age_30)
+                + (age_40*age_40)
+                + (age_50*age_50)
+                + (age_60*age_60);
         return ret;
     }
 }

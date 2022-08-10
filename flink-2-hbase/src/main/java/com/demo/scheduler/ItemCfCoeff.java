@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FIXME  基于协同过滤的产品相关度计算
+ * FIXME  基于协同过滤的产品相关度计算  参考： https://www.processon.com/mindmap/62f07ad80e3e745348f93361
  * * 策略1 ：协同过滤
  *      *           abs( i ∩ j)
  *      *      w = ——————————————
@@ -29,6 +29,13 @@ public class ItemCfCoeff {
         	if(id.equals(other)) continue;
         	// 计算两个产品之间的评分
             Double score = twoItemCfCoeff(id, other);
+            /**
+             *   * @param tablename 表名   : px
+             *      * @param rowkey 行号   : 本产品productId
+             *      * @param famliyname 列族名 : p
+             *      * @param column 列名    : other产品productId
+             *      * @param data 列值    : 一个产品和其他产品的相似度score
+             */
             HbaseClient.putData("px",id, "p",other,score.toString());
         }
     }
@@ -53,7 +60,6 @@ public class ItemCfCoeff {
          *      *           abs( i ∩ j)
          *      *      w = ——————————————
          *      *           sqrt(i || j)
-         * @author XINZE
          */
         // 求平方根
         Double total = Math.sqrt(n * m);
