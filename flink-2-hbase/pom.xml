@@ -13,6 +13,9 @@
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <lombok.version>1.18.4</lombok.version>
+        <guava.version>20.0</guava.version>
+        <hutool.version>5.1.2</hutool.version>
     </properties>
 
     <dependencies>
@@ -98,6 +101,33 @@
             <!--<artifactId>quartz</artifactId>-->
             <!--<version>2.3.0</version>-->
         <!--</dependency>-->
+
+        <!--汉语言包，主要用于分词-->
+        <dependency>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.6.5</version>
+        </dependency>
+        <!--
+        轻量级RESTful API
+        仅数KB，适合敏捷开发、移动APP等场景。简单易用，无需GPU配环境，秒速安装，强烈推荐。服务器GPU算力有限，匿名用户配额较少，建议申请免费公益API秘钥auth。
+        -->
+        <dependency>
+            <groupId>com.hankcs.hanlp.restful</groupId>
+            <artifactId>hanlp-restful</artifactId>
+            <version>0.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
 
     </dependencies>
     <build>
