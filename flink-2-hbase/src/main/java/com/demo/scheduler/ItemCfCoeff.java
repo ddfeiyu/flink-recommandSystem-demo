@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FIXME  基于协同过滤的产品相关度计算  参考： https://www.processon.com/mindmap/62f07ad80e3e745348f93361
+ * FIXME  【余弦相似度算法计算公式】基于协同过滤的产品相关度计算  参考： https://www.processon.com/mindmap/62f07ad80e3e745348f93361
  * * 策略1 ：协同过滤
  *      *           abs( i ∩ j)
  *      *      w = ——————————————
